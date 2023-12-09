@@ -1,0 +1,12 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: admin-service
+  boot:
+    admin:
+      instance-auth:
+        service-map:
+          config-service:
+            user-name: root
+            user-password: s3cr3t
