@@ -15,3 +15,9 @@ spring:
     user:
       name: root
       password: s3cr3t
+  boot:
+    admin:
+      client:
+        url: http://localhost:8086
+  application:
+    name: config-service

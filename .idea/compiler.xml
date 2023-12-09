@@ -11,11 +11,13 @@
         <module name="config-service" />
         <module name="gateway-service" />
         <module name="registry-service" />
+        <module name="admin-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
