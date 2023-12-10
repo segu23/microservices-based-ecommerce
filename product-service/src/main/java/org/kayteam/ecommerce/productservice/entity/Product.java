@@ -8,6 +8,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
@@ -17,12 +22,12 @@ import lombok.NoArgsConstructor;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private String uuid;
+    private Long uuid;
 
-    @NotNull
-    @Column(unique = true, nullable = false)
+    @Nullable
+    @Column(unique = true)
     public String slug;
 
     @Nullable
@@ -45,4 +50,24 @@ public class Product {
 
     @Nullable
     private Double oldPrice;
+
+    @CreationTimestamp
+    private Date createdAt;
+
+    @UpdateTimestamp
+    private Date updateAt;
+
+    private String userUUID;
+
+    @PreUpdate
+    @PrePersist
+    private void updateSlugFromName() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (this.name != null) {
+            stringBuilder.append(UUID.randomUUID().toString().split("-")[0]);
+            stringBuilder.append("-");
+            stringBuilder.append(this.name.toLowerCase().replace(" ", "-"));
+            this.slug = stringBuilder.toString();
+        }
+    }
 }

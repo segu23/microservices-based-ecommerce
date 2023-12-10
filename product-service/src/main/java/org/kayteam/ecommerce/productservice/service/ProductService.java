@@ -9,9 +9,13 @@ public interface ProductService {
 
     Page<Product> listProducts(int page, int amount);
 
-    Optional<Product> getProductByName(String name);
+    Optional<Product> getProductBySlug(String slug);
 
     Page<Product> searchProduct(String name, int page, int amount);
 
     Product saveProduct(Product product);
+
+    Boolean isProduct(Product product);
+
+    Product updateProduct(Product product);
 }

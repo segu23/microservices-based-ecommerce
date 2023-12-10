@@ -21,17 +21,27 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Optional<Product> getProductByName(String name) {
-        return Optional.empty();
+    public Optional<Product> getProductBySlug(String slug) {
+        return productRepository.findBySlug(slug);
     }
 
     @Override
     public Page<Product> searchProduct(String name, int page, int amount) {
-        return null;
+        return productRepository.findByNameContainingOrDescriptionContainingOrShortDescriptionContaining(name, name, name, PageRequest.of(page, amount))
     }
 
     @Override
     public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Boolean isProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
         return null;
     }
 }
