@@ -11,6 +11,11 @@ management:
       exposure:
         include: "*"
 spring:
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: lb://auth-service
   cloud:
     gateway:
       discovery:
