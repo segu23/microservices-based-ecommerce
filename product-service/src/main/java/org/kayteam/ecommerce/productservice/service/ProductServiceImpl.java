@@ -1,6 +1,6 @@
 package org.kayteam.ecommerce.productservice.service;
 
-import org.kayteam.ecommerce.productservice.entity.Product;
+import org.kayteam.ecommerce.commons.entity.Product;
 import org.kayteam.ecommerce.productservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,24 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
     @Override
-    public Page<Product> listProducts(int page, int amount) {
-        return productRepository.findAll(PageRequest.of(page, amount));
-    }
-
-    @Override
     public Optional<Product> getProductBySlug(String slug) {
-        return productRepository.findBySlug(slug);
+        return productRepository.findByHistoricSlugsContaining(slug);
     }
 
     @Override
-    public Page<Product> searchProduct(String name, int page, int amount) {
-        return productRepository.findByNameContainingOrDescriptionContainingOrShortDescriptionContaining(name, name, name, PageRequest.of(page, amount))
+    public Page<Product> searchProduct(String query, int page, int amount) {
+        return productRepository.findByNameContainingOrDescriptionContainingOrShortDescriptionContaining(query, query, query, PageRequest.of(page, amount));
     }
 
     @Override
@@ -37,11 +32,11 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Boolean isProduct(Product product) {
-        return null;
+        return productRepository.existsById(product.getId());
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        return null;
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 }
