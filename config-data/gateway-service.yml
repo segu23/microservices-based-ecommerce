@@ -15,7 +15,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8084
+          issuer-uri: http://localhost:8094
   cloud:
     gateway:
       discovery:
