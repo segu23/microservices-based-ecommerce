@@ -1,11 +1,10 @@
-package com.formacionbdi.springboot.app.oauth.services;
+package org.kayteam.ecommerce.authservice.service;
 
-import com.formacionbdi.springboot.app.commons.usuarios.models.entity.Usuario;
+import org.kayteam.ecommerce.commons.entity.User;
 
-public interface IUsuarioService {
-	
-	public Usuario findByUsername(String username);
-	
-	public Usuario update(Usuario usuario, Long id);
+public interface UserService {
 
+    User findByEmail(String email);
+
+    User update(String id, User user);
 }

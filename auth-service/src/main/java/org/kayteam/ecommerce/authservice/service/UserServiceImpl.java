@@ -1,8 +1,7 @@
-package com.formacionbdi.springboot.app.oauth.services;
+package org.kayteam.ecommerce.authservice.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import feign.FeignException;
+import org.kayteam.ecommerce.authservice.client.UserFeignClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,51 +13,46 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.formacionbdi.springboot.app.oauth.clients.UsuarioFeignClient;
-
-import feign.FeignException;
-
-import com.formacionbdi.springboot.app.commons.usuarios.models.entity.Usuario;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class UsuarioService implements IUsuarioService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
-	private Logger log = LoggerFactory.getLogger(UsuarioService.class);
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	@Autowired
-	private UsuarioFeignClient client;
+    @Autowired
+    private UserFeignClient userClient;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		try {
-			Usuario usuario = client.findByUsername(username);
+        try {
+            org.kayteam.ecommerce.commons.entity.User user = userClient.findByEmail(username).getBody().get();
+            List<GrantedAuthority> authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getNombre()))
+                    .peek(authority -> logger.info("Role: " + authority.getAuthority()))
+                    .collect(Collectors.toList());
 
-			List<GrantedAuthority> authorities = usuario.getRoles().stream()
-					.map(role -> new SimpleGrantedAuthority(role.getNombre()))
-					.peek(authority -> log.info("Role: " + authority.getAuthority())).collect(Collectors.toList());
+            logger.info("Usuario autenticado: " + username);
 
-			log.info("Usuario autenticado: " + username);
+            return new User(user.getEmail(), user.getPassword(), true, true, true, true,
+                    authorities);
+        } catch (FeignException e) {
+            String error = "Error en el login, no existe el usuario '" + username + "' en el sistema";
+            logger.error(error);
 
-			return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
-					authorities);
+            throw new UsernameNotFoundException(error);
+        }
+    }
 
-		} catch (FeignException e) {
-			String error = "Error en el login, no existe el usuario '" + username + "' en el sistema";
-			log.error(error);
+    @Override
+    public org.kayteam.ecommerce.commons.entity.User findByEmail(String email) {
+        return userClient.findByEmail(email).getBody().get();
+    }
 
-			throw new UsernameNotFoundException(error);
-		}
-	}
-
-	@Override
-	public Usuario findByUsername(String username) {
-		return client.findByUsername(username);
-	}
-
-	@Override
-	public Usuario update(Usuario usuario, Long id) {
-		return client.update(usuario, id);
-	}
-
+    @Override
+    public org.kayteam.ecommerce.commons.entity.User update(String id, org.kayteam.ecommerce.commons.entity.User user) {
+        return userClient.updateUser(id, user).getBody();
+    }
 }

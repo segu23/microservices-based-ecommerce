@@ -1,20 +1,18 @@
-package com.formacionbdi.springboot.app.oauth.clients;
+package org.kayteam.ecommerce.authservice.client;
 
+import org.kayteam.ecommerce.commons.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.formacionbdi.springboot.app.commons.usuarios.models.entity.Usuario;
+import java.util.Optional;
 
-@FeignClient(name="servicio-usuarios")
-public interface UsuarioFeignClient {
+@FeignClient("user-service")
+public interface UserFeignClient {
 
-	@GetMapping("/usuarios/search/buscar-username")
-	public Usuario findByUsername(@RequestParam String username);
-	
-	@PutMapping("/usuarios/{id}")
-	public Usuario update(@RequestBody Usuario usuario, @PathVariable Long id);
+    @GetMapping("/api/v1/users")
+    ResponseEntity<Optional<User>> findByEmail(@RequestParam("email") String email);
+
+    @PutMapping("/api/v1/users/{id}")
+    ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody User user);
 }

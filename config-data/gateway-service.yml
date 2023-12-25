@@ -15,7 +15,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: lb://auth-service
+          issuer-uri: http://localhost:8080/auth
   cloud:
     gateway:
       discovery:
