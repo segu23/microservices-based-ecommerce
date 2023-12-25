@@ -6,6 +6,10 @@ management:
       exposure:
         include: "*"
 spring:
+  security:
+    user:
+      name: root
+      password: s3cr3t
   application:
     name: admin-service
   boot:
@@ -13,5 +17,8 @@ spring:
       instance-auth:
         service-map:
           config-service:
+            user-name: root
+            user-password: s3cr3t
+          auth-service:
             user-name: root
             user-password: s3cr3t
