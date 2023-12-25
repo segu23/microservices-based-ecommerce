@@ -31,9 +31,6 @@ public class SecurityConfig {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     private final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Autowired
@@ -43,7 +40,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return username -> {
             if(username.equals(env.getProperty("config.security.oauth.client.id"))){
-                return new org.springframework.security.core.userdetails.User(env.getProperty("config.security.oauth.client.id"), passwordEncoder.encode(env.getProperty("config.security.oauth.client.secret")),
+                return new org.springframework.security.core.userdetails.User(env.getProperty("config.security.oauth.client.id"), passwordEncoder().encode(env.getProperty("config.security.oauth.client.secret")),
                         true, true, true, true, Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             }
 

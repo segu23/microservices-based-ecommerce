@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5a5e95a-93d6-403e-b28a-9b00c65316c5" name="Changes" comment="update" />
+    <list default="true" id="e5a5e95a-93d6-403e-b28a-9b00c65316c5" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/org/kayteam/ecommerce/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/org/kayteam/ecommerce/authservice/config/SecurityConfig.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,7 +190,7 @@
       <workItem from="1703376900873" duration="102000" />
       <workItem from="1703424974143" duration="10010000" />
       <workItem from="1703512418325" duration="1037000" />
-      <workItem from="1703513470610" duration="2457000" />
+      <workItem from="1703513470610" duration="3192000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
