@@ -1,0 +1,6 @@
+config:
+  security:
+    oauth:
+      client:
+        id: root
+        secret: s3cr3t
