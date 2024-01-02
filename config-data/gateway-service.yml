@@ -13,17 +13,10 @@ management:
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          spring-cloud-gateway-client:
-            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-service
-            authorization-grant-type: authorization_code
-            client-secret: 34AXv23Nxv9lmqErN5wrtsVleSYHarqN
-            client-id: gateway-client
-            provider: keycloak
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:9090/realms/autoplants-realm
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/autoplants-realm
+          jwk-set-uri: http://localhost:9090/realms/autoplants-realm/protocol/openid-connect/certs
   cloud:
     gateway:
       discovery:
