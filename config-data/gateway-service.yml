@@ -13,9 +13,14 @@ management:
 spring:
   security:
     oauth2:
-      resource-server:
-        jwt:
-          issuer-uri: http://localhost:9090/realms/autoplants-realm
+      client:
+        registration:
+          spring-cloud-gateway-client:
+            client-secret: ${KEYCLOAK_SECRET}
+            client-id: gateway-client
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9090/realms/autoplants-realm
   cloud:
     gateway:
       discovery:
