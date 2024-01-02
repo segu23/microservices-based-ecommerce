@@ -16,8 +16,11 @@ spring:
       client:
         registration:
           spring-cloud-gateway-client:
-            client-secret: ${KEYCLOAK_SECRET}
+            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-service
+            authorization-grant-type: authorization_code
+            client-secret: 34AXv23Nxv9lmqErN5wrtsVleSYHarqN
             client-id: gateway-client
+            provider: keycloak
         provider:
           keycloak:
             issuer-uri: http://localhost:9090/realms/autoplants-realm
