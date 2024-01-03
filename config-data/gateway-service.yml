@@ -10,11 +10,12 @@ management:
     web:
       exposure:
         include: "*"
+jwt:
+  auth:
+    converter:
+      resource-id: gateway-service
+      principle-attribute: preferred_username
 spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-  main:
-    allow-bean-definition-overriding: true
   security:
     oauth2:
       resourceserver:
